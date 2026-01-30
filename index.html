@@ -92,6 +92,7 @@
         .header-actions {
             display: flex;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -127,6 +128,46 @@
 
         .btn-excel:hover {
             background: #1a5c38;
+        }
+
+        .btn-csv {
+            background: #0066cc;
+            color: #fff;
+            border-color: #0066cc;
+        }
+
+        .btn-csv:hover {
+            background: #0052a3;
+        }
+
+        .btn-import {
+            background: #9c27b0;
+            color: #fff;
+            border-color: #9c27b0;
+        }
+
+        .btn-import:hover {
+            background: #7b1fa2;
+        }
+
+        .btn-github {
+            background: #24292e;
+            color: #fff;
+            border-color: #24292e;
+        }
+
+        .btn-github:hover {
+            background: #1b1f23;
+        }
+
+        .btn-overview {
+            background: #ff9800;
+            color: #fff;
+            border-color: #ff9800;
+        }
+
+        .btn-overview:hover {
+            background: #f57c00;
         }
 
         .btn-share {
@@ -392,7 +433,7 @@
             padding: 3px;
             border: 1px solid #ddd;
             font-size: 11px;
-            width: 75px;
+            width: 85px;
         }
 
         .timesheet input[type="text"] {
@@ -520,6 +561,12 @@
             gap: 8px;
         }
 
+        .project-add select {
+            padding: 4px 8px;
+            border: 1px solid #ccc;
+            font-size: 12px;
+        }
+
         .project-add input {
             padding: 4px 8px;
             border: 1px solid #ccc;
@@ -604,10 +651,11 @@
         .modal {
             background: #fff;
             border-radius: 8px;
-            max-width: 600px;
-            max-height: 80vh;
+            max-width: 800px;
+            max-height: 90vh;
             overflow: auto;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            width: 90%;
         }
 
         .modal-header {
@@ -622,6 +670,12 @@
         .modal-header h2 {
             font-size: 16px;
             font-weight: bold;
+        }
+
+        .modal-header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
         }
 
         .modal-close {
@@ -674,32 +728,211 @@
             font-size: 12px;
         }
 
+        /* Project Overview Table */
+        .overview-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .overview-table th,
+        .overview-table td {
+            border: 1px solid #ddd;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        .overview-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .overview-table tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .overview-table tfoot td {
+            background: #e8e8e8;
+            font-weight: bold;
+        }
+
+        .overview-table .hours-cell {
+            text-align: right;
+            font-weight: 500;
+        }
+
+        .overview-table .percent-cell {
+            text-align: right;
+            color: #666;
+        }
+
+        .overview-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .overview-stat {
+            background: #f5f5f5;
+            padding: 15px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .overview-stat .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .overview-stat .stat-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        /* Hidden file input */
+        .hidden-input {
+            display: none;
+        }
+
         /* Print styles */
         @media print {
-            body {
+            @page {
+                size: A4 landscape;
+                margin: 15mm;
+            }
+
+            html, body {
                 overflow: visible;
                 height: auto;
             }
+
+            body {
+                font-size: 11px;
+                background: #fff;
+            }
+
             .container {
                 overflow: visible;
+                padding: 0;
             }
-            .header-actions, .project-manager, .controls .view-selector, .lang-selector, .right-panel {
-                display: none;
+
+            .header-actions, .project-manager, .controls .view-selector, .lang-selector, .right-panel, .btn {
+                display: none !important;
             }
+
+            .header {
+                border: none;
+                margin-bottom: 5mm;
+            }
+
+            .controls {
+                border: none;
+                margin-bottom: 3mm;
+            }
+
+            .summary-row {
+                margin-bottom: 5mm;
+            }
+
+            .summary-card {
+                border: 1px solid #333;
+            }
+
             .main-content {
                 display: block;
-            }
-            .left-panel {
-                width: 100%;
-            }
-            .timesheet-wrapper, .timesheet {
                 overflow: visible;
             }
+
+            .left-panel {
+                width: 100%;
+                overflow: visible;
+            }
+
+            .timesheet-wrapper {
+                overflow: visible;
+                border: 2px solid #333;
+            }
+
+            .timesheet {
+                overflow: visible;
+            }
+
             .timesheet table {
                 width: 100%;
+                table-layout: auto;
             }
+
+            .timesheet thead {
+                display: table-header-group;
+            }
+
+            .timesheet tbody {
+                display: table-row-group;
+            }
+
+            .timesheet tfoot {
+                display: table-footer-group;
+                position: relative;
+            }
+
+            .timesheet tfoot td {
+                border-top: 2px solid #333;
+            }
+
+            .timesheet th,
+            .timesheet td {
+                border: 1px solid #333;
+                padding: 3px 4px;
+                font-size: 10px;
+                position: static !important;
+            }
+
+            .timesheet input,
+            .timesheet select {
+                border: none;
+                background: transparent;
+                font-size: 10px;
+                padding: 0;
+                text-align: center;
+            }
+
             .modal-overlay {
                 display: none !important;
+            }
+
+            /* Overview print styles */
+            .overview-table {
+                page-break-inside: avoid;
+            }
+
+            .overview-table th,
+            .overview-table td {
+                border: 1px solid #333;
+                padding: 6px 8px;
+            }
+        }
+
+        /* Print for overview modal */
+        @media print {
+            .modal-overlay.show.print-mode {
+                display: block !important;
+                position: static;
+                background: none;
+            }
+
+            .modal-overlay.show.print-mode .modal {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: 100%;
+                max-height: none;
+            }
+
+            .modal-overlay.show.print-mode .modal-close {
+                display: none;
             }
         }
 
@@ -726,6 +959,23 @@
                 </div>
             </div>
             <div class="header-actions">
+                <button class="btn btn-overview" onclick="showProjectOverview()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4 14h-2v-4H9v4H7v-6h2v2h4v-2h2v6zm0-8H9V7h6v2z"/></svg>
+                    <span data-i18n="projectOverview">Projekt Übersicht</span>
+                </button>
+                <button class="btn btn-github" onclick="showGitHubModal()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    <span data-i18n="loadGitHub">Load GitHub</span>
+                </button>
+                <button class="btn btn-import" onclick="document.getElementById('csvImport').click()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+                    <span data-i18n="importCSV">Import CSV</span>
+                </button>
+                <input type="file" id="csvImport" class="hidden-input" accept=".csv" onchange="importCSV(this)">
+                <button class="btn btn-csv" onclick="exportCSV()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 7h14v2H5v-2z"/></svg>
+                    <span data-i18n="exportCSV">Export CSV</span>
+                </button>
                 <button class="btn btn-share" onclick="shareSheet()">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>
                     <span data-i18n="share">Share</span>
@@ -801,8 +1051,12 @@
                     <div class="project-manager-header">
                         <h3 data-i18n="projects">Projects</h3>
                         <div class="project-add">
-                            <input type="text" id="newProject" data-i18n-placeholder="newProject" placeholder="New project" onkeypress="if(event.key==='Enter')addProject()">
-                            <button class="btn btn-primary" onclick="addProject()">+ <span data-i18n="add">Add</span></button>
+                            <select id="addType">
+                                <option value="project" data-i18n="project">Project</option>
+                                <option value="location" data-i18n="locationOption">Arbeitsort</option>
+                            </select>
+                            <input type="text" id="newProject" data-i18n-placeholder="newEntry" placeholder="New entry" onkeypress="if(event.key==='Enter')addEntry()">
+                            <button class="btn btn-primary" onclick="addEntry()">+ <span data-i18n="add">Add</span></button>
                         </div>
                     </div>
                     <div class="project-list" id="projectList"></div>
@@ -830,12 +1084,72 @@
         </div>
     </div>
 
+    <!-- Project Overview Modal -->
+    <div class="modal-overlay" id="overviewModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-i18n="projectOverview">Projekt Übersicht</h2>
+                <div class="modal-header-actions">
+                    <button class="btn btn-csv" onclick="exportOverviewCSV()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 7h14v2H5v-2z"/></svg>
+                        <span data-i18n="exportCSV">Export CSV</span>
+                    </button>
+                    <button class="btn btn-excel" onclick="exportOverviewExcel()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/><path d="M8 12h3l1.5 2.5L14 12h3l-3 4.5 3 4.5h-3l-1.5-2.5L11 21H8l3-4.5z"/></svg>
+                        <span data-i18n="exportExcel">Excel</span>
+                    </button>
+                    <button class="btn" onclick="printOverview()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+                        <span data-i18n="print">Print</span>
+                    </button>
+                    <button class="modal-close" onclick="closeOverview()">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body" id="overviewBody"></div>
+        </div>
+    </div>
+
+    <!-- GitHub Load Modal -->
+    <div class="modal-overlay" id="githubModal">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2 data-i18n="loadGitHub">Load from GitHub</h2>
+                <button class="modal-close" onclick="closeGitHubModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p data-i18n="githubInstructions" style="margin-bottom: 15px;">Enter the raw GitHub URL of your CSV file. You can get this by clicking "Raw" on your CSV file in GitHub.</p>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;" data-i18n="githubUrl">GitHub Raw URL:</label>
+                    <input type="text" id="githubUrl" style="width: 100%; padding: 8px; border: 1px solid #ccc; font-size: 13px;" placeholder="https://raw.githubusercontent.com/user/repo/main/data.csv">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="githubSaveUrl" checked>
+                        <span data-i18n="saveUrlForFuture">Save URL for future use</span>
+                    </label>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button class="btn" onclick="closeGitHubModal()" data-i18n="cancel">Cancel</button>
+                    <button class="btn btn-primary" onclick="loadFromGitHub()" data-i18n="load">Load</button>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 4px;">
+                    <h4 style="margin-bottom: 10px; font-size: 13px;" data-i18n="howToUse">How to use:</h4>
+                    <ol style="font-size: 12px; color: #666; margin-left: 20px; line-height: 1.8;">
+                        <li data-i18n="step1">Export your data as CSV using "Export CSV"</li>
+                        <li data-i18n="step2">Upload the CSV file to your GitHub repository</li>
+                        <li data-i18n="step3">Click "Raw" button on the file page</li>
+                        <li data-i18n="step4">Copy the URL and paste it here</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="status-msg" id="statusMsg"></div>
 
     <script>
         // German Holidays (National + Baden-Württemberg)
         function getEasterSunday(year) {
-            // Anonymous Gregorian algorithm
             const a = year % 19;
             const b = Math.floor(year / 100);
             const c = year % 100;
@@ -863,7 +1177,6 @@
             const easter = getEasterSunday(year);
 
             const holidays = [
-                // Fixed holidays
                 { date: new Date(year, 0, 1), de: 'Neujahr', en: 'New Year\'s Day' },
                 { date: new Date(year, 0, 6), de: 'Heilige Drei Könige', en: 'Epiphany', bw: true },
                 { date: new Date(year, 4, 1), de: 'Tag der Arbeit', en: 'Labour Day' },
@@ -871,8 +1184,6 @@
                 { date: new Date(year, 10, 1), de: 'Allerheiligen', en: 'All Saints\' Day', bw: true },
                 { date: new Date(year, 11, 25), de: '1. Weihnachtstag', en: 'Christmas Day' },
                 { date: new Date(year, 11, 26), de: '2. Weihnachtstag', en: 'St. Stephen\'s Day' },
-
-                // Movable holidays (based on Easter)
                 { date: addDays(easter, -2), de: 'Karfreitag', en: 'Good Friday' },
                 { date: addDays(easter, 1), de: 'Ostermontag', en: 'Easter Monday' },
                 { date: addDays(easter, 39), de: 'Christi Himmelfahrt', en: 'Ascension Day' },
@@ -901,6 +1212,8 @@
                 share: 'Share',
                 email: 'Email',
                 exportExcel: 'Export Excel',
+                exportCSV: 'Export CSV',
+                importCSV: 'Import CSV',
                 print: 'Print',
                 day: 'Day',
                 week: 'Week',
@@ -912,7 +1225,10 @@
                 workDays: 'Work Days',
                 projects: 'Projects',
                 newProject: 'New project',
+                newEntry: 'New entry',
                 add: 'Add',
+                project: 'Project',
+                locationOption: 'Location',
                 scrollHint: 'Scroll →',
                 date: 'Date',
                 duration: 'Duration',
@@ -923,10 +1239,16 @@
                 homeOffice: 'Home-office',
                 onSite: 'On-site',
                 vacation: 'Vacation',
+                holiday: 'Holiday',
                 projectExists: 'Project already exists',
                 projectAdded: 'Project added',
+                locationAdded: 'Location added',
+                locationExists: 'Location already exists',
                 removeProject: 'Remove project',
                 excelExported: 'Excel exported',
+                csvExported: 'CSV exported',
+                csvImported: 'CSV imported',
+                csvImportError: 'Error importing CSV',
                 copiedClipboard: 'Copied to clipboard',
                 couldNotShare: 'Could not share',
                 timesheet: 'Timesheet',
@@ -936,6 +1258,25 @@
                 helpTitle: 'TOM - User Guide',
                 holidays: 'Holidays',
                 noHolidays: 'No holidays in this period',
+                projectOverview: 'Project Overview',
+                hours: 'Hours',
+                percentage: 'Percentage',
+                averagePerDay: 'Average/Day',
+                projectName: 'Project Name',
+                loadGitHub: 'Load GitHub',
+                githubInstructions: 'Enter the raw GitHub URL of your CSV file. You can get this by clicking "Raw" on your CSV file in GitHub.',
+                githubUrl: 'GitHub Raw URL:',
+                saveUrlForFuture: 'Save URL for future use',
+                cancel: 'Cancel',
+                load: 'Load',
+                howToUse: 'How to use:',
+                step1: 'Export your data as CSV using "Export CSV"',
+                step2: 'Upload the CSV file to your GitHub repository',
+                step3: 'Click "Raw" button on the file page',
+                step4: 'Copy the URL and paste it here',
+                githubLoaded: 'Data loaded from GitHub',
+                githubError: 'Error loading from GitHub',
+                githubNoUrl: 'Please enter a GitHub URL',
                 days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
                 months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                 helpContent: `
@@ -949,6 +1290,7 @@
                         <li>Duration and overtime are calculated automatically</li>
                         <li>Select your work location from the dropdown</li>
                         <li>Add notes to describe your work</li>
+                        <li>On holidays, the location is automatically set to "Holiday"</li>
                     </ul>
 
                     <h3>View Options</h3>
@@ -967,16 +1309,26 @@
                         <li>Holiday list is shown on the right panel</li>
                     </ul>
 
-                    <h3>Manage Projects</h3>
+                    <h3>Manage Projects & Locations</h3>
                     <ul>
-                        <li>Add new projects using the input field at the bottom</li>
+                        <li>Select "Project" or "Location" from the dropdown</li>
+                        <li>Add new entries using the input field</li>
                         <li>Click <span class="shortcut">×</span> to remove a project</li>
                         <li>Projects appear as columns in your timesheet</li>
                     </ul>
 
-                    <h3>Export & Share</h3>
+                    <h3>Project Overview</h3>
                     <ul>
-                        <li><strong>Export Excel</strong> - Download as .xlsx file</li>
+                        <li>Click "Project Overview" to see hours per project</li>
+                        <li>Shows total hours, percentage, and average per day</li>
+                        <li>Can be printed or exported to Excel/CSV</li>
+                    </ul>
+
+                    <h3>Import & Export</h3>
+                    <ul>
+                        <li><strong>Import CSV</strong> - Load data from a CSV file</li>
+                        <li><strong>Export CSV</strong> - Save data as CSV for backup</li>
+                        <li><strong>Export Excel</strong> - Download as formatted .xlsx report</li>
                         <li><strong>Email</strong> - Send summary via email</li>
                         <li><strong>Share</strong> - Copy summary to clipboard</li>
                         <li><strong>Print</strong> - Print current view</li>
@@ -999,6 +1351,8 @@
                 share: 'Teilen',
                 email: 'E-Mail',
                 exportExcel: 'Excel Export',
+                exportCSV: 'CSV Export',
+                importCSV: 'CSV Import',
                 print: 'Drucken',
                 day: 'Tag',
                 week: 'Woche',
@@ -1010,7 +1364,10 @@
                 workDays: 'Arbeitstage',
                 projects: 'Projekte',
                 newProject: 'Neues Projekt',
-                add: 'Hinzufügen',
+                newEntry: 'Neuer Eintrag',
+                add: 'Einfügen',
+                project: 'Projekt',
+                locationOption: 'Arbeitsort',
                 scrollHint: 'Scrollen →',
                 date: 'Datum',
                 duration: 'Dauer',
@@ -1021,10 +1378,16 @@
                 homeOffice: 'Home-Office',
                 onSite: 'Vor Ort',
                 vacation: 'Urlaub',
+                holiday: 'Feiertag',
                 projectExists: 'Projekt existiert bereits',
                 projectAdded: 'Projekt hinzugefügt',
+                locationAdded: 'Arbeitsort hinzugefügt',
+                locationExists: 'Arbeitsort existiert bereits',
                 removeProject: 'Projekt entfernen',
                 excelExported: 'Excel exportiert',
+                csvExported: 'CSV exportiert',
+                csvImported: 'CSV importiert',
+                csvImportError: 'Fehler beim CSV-Import',
                 copiedClipboard: 'In Zwischenablage kopiert',
                 couldNotShare: 'Teilen nicht möglich',
                 timesheet: 'Stundenzettel',
@@ -1034,6 +1397,25 @@
                 helpTitle: 'TOM - Benutzerhandbuch',
                 holidays: 'Feiertage',
                 noHolidays: 'Keine Feiertage in diesem Zeitraum',
+                projectOverview: 'Projekt Übersicht',
+                hours: 'Stunden',
+                percentage: 'Prozent',
+                averagePerDay: 'Durchschnitt/Tag',
+                projectName: 'Projektname',
+                loadGitHub: 'Von GitHub laden',
+                githubInstructions: 'Geben Sie die Raw-URL Ihrer CSV-Datei von GitHub ein. Sie erhalten diese, indem Sie auf "Raw" bei Ihrer CSV-Datei in GitHub klicken.',
+                githubUrl: 'GitHub Raw URL:',
+                saveUrlForFuture: 'URL für zukünftige Nutzung speichern',
+                cancel: 'Abbrechen',
+                load: 'Laden',
+                howToUse: 'So funktioniert es:',
+                step1: 'Exportieren Sie Ihre Daten als CSV mit "CSV Export"',
+                step2: 'Laden Sie die CSV-Datei in Ihr GitHub-Repository hoch',
+                step3: 'Klicken Sie auf den "Raw"-Button auf der Dateiseite',
+                step4: 'Kopieren Sie die URL und fügen Sie sie hier ein',
+                githubLoaded: 'Daten von GitHub geladen',
+                githubError: 'Fehler beim Laden von GitHub',
+                githubNoUrl: 'Bitte geben Sie eine GitHub-URL ein',
                 days: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
                 months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
                 helpContent: `
@@ -1047,6 +1429,7 @@
                         <li>Dauer und Überstunden werden automatisch berechnet</li>
                         <li>Wählen Sie Ihren Arbeitsort aus dem Dropdown-Menü</li>
                         <li>Fügen Sie Bemerkungen hinzu, um Ihre Arbeit zu beschreiben</li>
+                        <li>An Feiertagen wird der Arbeitsort automatisch auf "Feiertag" gesetzt</li>
                     </ul>
 
                     <h3>Ansichtsoptionen</h3>
@@ -1065,16 +1448,26 @@
                         <li>Feiertagsliste wird rechts angezeigt</li>
                     </ul>
 
-                    <h3>Projekte Verwalten</h3>
+                    <h3>Projekte & Arbeitsorte Verwalten</h3>
                     <ul>
-                        <li>Fügen Sie neue Projekte über das Eingabefeld unten hinzu</li>
+                        <li>Wählen Sie "Projekt" oder "Arbeitsort" aus dem Dropdown</li>
+                        <li>Fügen Sie neue Einträge über das Eingabefeld hinzu</li>
                         <li>Klicken Sie auf <span class="shortcut">×</span>, um ein Projekt zu entfernen</li>
                         <li>Projekte erscheinen als Spalten in Ihrem Stundenzettel</li>
                     </ul>
 
-                    <h3>Exportieren & Teilen</h3>
+                    <h3>Projekt Übersicht</h3>
                     <ul>
-                        <li><strong>Excel Export</strong> - Als .xlsx-Datei herunterladen</li>
+                        <li>Klicken Sie auf "Projekt Übersicht" um Stunden pro Projekt zu sehen</li>
+                        <li>Zeigt Gesamtstunden, Prozent und Durchschnitt pro Tag</li>
+                        <li>Kann gedruckt oder als Excel/CSV exportiert werden</li>
+                    </ul>
+
+                    <h3>Import & Export</h3>
+                    <ul>
+                        <li><strong>CSV Import</strong> - Daten aus CSV-Datei laden</li>
+                        <li><strong>CSV Export</strong> - Daten als CSV für Backup speichern</li>
+                        <li><strong>Excel Export</strong> - Als formatierte .xlsx-Datei herunterladen</li>
                         <li><strong>E-Mail</strong> - Zusammenfassung per E-Mail senden</li>
                         <li><strong>Teilen</strong> - Zusammenfassung in Zwischenablage kopieren</li>
                         <li><strong>Drucken</strong> - Aktuelle Ansicht drucken</li>
@@ -1097,6 +1490,7 @@
         let currentLang = 'en';
         let entries = {};
         let projects = [];
+        let customLocations = [];
         let settings = { userName: '', targetHoursPerDay: 8, language: 'en' };
         let currentView = 'month';
         let currentDate = new Date();
@@ -1107,9 +1501,11 @@
             return translations[currentLang][key] || translations['en'][key] || key;
         }
 
-        // Get locations based on language
+        // Get locations based on language (including custom locations)
         function getLocations() {
-            return [t('office'), t('homeOffice'), t('onSite'), t('vacation'), '-'];
+            const defaultLocs = [t('office'), t('homeOffice'), t('onSite'), t('vacation'), t('holiday')];
+            const allLocs = [...defaultLocs, ...customLocations, '-'];
+            return [...new Set(allLocs)];
         }
 
         // Get holiday name based on language
@@ -1132,6 +1528,14 @@
             document.getElementById('helpModal').addEventListener('click', (e) => {
                 if (e.target.id === 'helpModal') closeHelp();
             });
+
+            document.getElementById('overviewModal').addEventListener('click', (e) => {
+                if (e.target.id === 'overviewModal') closeOverview();
+            });
+
+            document.getElementById('githubModal').addEventListener('click', (e) => {
+                if (e.target.id === 'githubModal') closeGitHubModal();
+            });
         });
 
         // Help Modal
@@ -1142,6 +1546,354 @@
 
         function closeHelp() {
             document.getElementById('helpModal').classList.remove('show');
+        }
+
+        // Project Overview Modal
+        function showProjectOverview() {
+            const dates = getViewDates();
+            const periodLabel = getPeriodLabel();
+
+            const projectTotals = {};
+            projects.forEach(p => projectTotals[p] = 0);
+            let totalHours = 0;
+            let workDays = 0;
+
+            dates.forEach(date => {
+                const dateStr = formatDate(date);
+                const entry = entries[dateStr] || {};
+                let dayHours = 0;
+
+                projects.forEach(p => {
+                    const h = entry[p] || 0;
+                    projectTotals[p] += h;
+                    dayHours += h;
+                });
+
+                if (dayHours > 0) workDays++;
+                totalHours += dayHours;
+            });
+
+            let html = `
+                <h3>${t('timesheet')}: ${periodLabel}</h3>
+                <p>${t('byLabel')}: ${settings.userName || 'User'}</p>
+
+                <div class="overview-summary">
+                    <div class="overview-stat">
+                        <div class="stat-value">${totalHours.toFixed(2)}</div>
+                        <div class="stat-label">${t('totalHours')}</div>
+                    </div>
+                    <div class="overview-stat">
+                        <div class="stat-value">${workDays}</div>
+                        <div class="stat-label">${t('workDays')}</div>
+                    </div>
+                    <div class="overview-stat">
+                        <div class="stat-value">${workDays > 0 ? (totalHours / workDays).toFixed(2) : '0.00'}</div>
+                        <div class="stat-label">${t('averagePerDay')}</div>
+                    </div>
+                </div>
+
+                <table class="overview-table">
+                    <thead>
+                        <tr>
+                            <th>${t('projectName')}</th>
+                            <th>${t('hours')}</th>
+                            <th>${t('percentage')}</th>
+                            <th>${t('averagePerDay')}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            const sortedProjects = Object.entries(projectTotals)
+                .filter(([_, hours]) => hours > 0)
+                .sort((a, b) => b[1] - a[1]);
+
+            sortedProjects.forEach(([project, hours]) => {
+                const percentage = totalHours > 0 ? (hours / totalHours * 100).toFixed(1) : '0.0';
+                const avgPerDay = workDays > 0 ? (hours / workDays).toFixed(2) : '0.00';
+                html += `
+                    <tr>
+                        <td>${escapeHtml(project)}</td>
+                        <td class="hours-cell">${hours.toFixed(2)}</td>
+                        <td class="percent-cell">${percentage}%</td>
+                        <td class="hours-cell">${avgPerDay}</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>${t('total')}</td>
+                            <td class="hours-cell">${totalHours.toFixed(2)}</td>
+                            <td class="percent-cell">100%</td>
+                            <td class="hours-cell">${workDays > 0 ? (totalHours / workDays).toFixed(2) : '0.00'}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            `;
+
+            document.getElementById('overviewBody').innerHTML = html;
+            document.getElementById('overviewModal').classList.add('show');
+        }
+
+        function closeOverview() {
+            document.getElementById('overviewModal').classList.remove('show');
+            document.getElementById('overviewModal').classList.remove('print-mode');
+        }
+
+        // GitHub Modal Functions
+        function showGitHubModal() {
+            const savedUrl = localStorage.getItem('tom_github_url') || '';
+            document.getElementById('githubUrl').value = savedUrl;
+            document.getElementById('githubModal').classList.add('show');
+            applyTranslations();
+        }
+
+        function closeGitHubModal() {
+            document.getElementById('githubModal').classList.remove('show');
+        }
+
+        async function loadFromGitHub() {
+            const url = document.getElementById('githubUrl').value.trim();
+            const saveUrl = document.getElementById('githubSaveUrl').checked;
+
+            if (!url) {
+                showStatus(t('githubNoUrl'));
+                return;
+            }
+
+            // Convert GitHub URL to raw URL if needed
+            let rawUrl = url;
+            if (url.includes('github.com') && !url.includes('raw.githubusercontent.com')) {
+                rawUrl = url
+                    .replace('github.com', 'raw.githubusercontent.com')
+                    .replace('/blob/', '/');
+            }
+
+            try {
+                const response = await fetch(rawUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const csvText = await response.text();
+
+                // Parse the CSV
+                const lines = csvText.split('\n').filter(l => l.trim());
+                if (lines.length < 2) {
+                    throw new Error('Invalid CSV format');
+                }
+
+                // Parse header
+                const header = parseCSVLine(lines[0]);
+                const dateColIndex = 0;
+                const projectCols = [];
+                const locationColIndex = header.findIndex(h =>
+                    h.toLowerCase() === 'location' ||
+                    h.toLowerCase() === 'arbeitsort' ||
+                    h === t('location')
+                );
+                const notesColIndex = header.findIndex(h =>
+                    h.toLowerCase() === 'notes' ||
+                    h.toLowerCase() === 'bemerkung' ||
+                    h === t('notes')
+                );
+
+                // Find project columns
+                const skipCols = [t('date'), t('duration'), t('overtime'), t('location'), t('notes'),
+                                 'date', 'duration', 'overtime', 'location', 'notes',
+                                 'datum', 'dauer', 'überstunden', 'arbeitsort', 'bemerkung'];
+
+                header.forEach((h, i) => {
+                    if (i === 0) return;
+                    if (!skipCols.some(s => h.toLowerCase() === s.toLowerCase())) {
+                        projectCols.push({ index: i, name: h });
+                    }
+                });
+
+                // Add new projects if not exist
+                projectCols.forEach(pc => {
+                    if (!projects.includes(pc.name)) {
+                        projects.push(pc.name);
+                    }
+                });
+
+                // Parse data rows
+                for (let i = 1; i < lines.length; i++) {
+                    const row = parseCSVLine(lines[i]);
+                    if (!row[0] || row[0].toLowerCase().includes('total') || row[0].toLowerCase().includes('summe')) {
+                        continue;
+                    }
+
+                    const dateMatch = row[0].match(/(\d{1,2})\.(\d{1,2})(?:\.(\d{4}))?/);
+                    if (!dateMatch) continue;
+
+                    const day = parseInt(dateMatch[1]);
+                    const month = parseInt(dateMatch[2]) - 1;
+                    const year = dateMatch[3] ? parseInt(dateMatch[3]) : currentDate.getFullYear();
+                    const date = new Date(year, month, day);
+                    const dateStr = formatDate(date);
+
+                    if (!entries[dateStr]) entries[dateStr] = {};
+
+                    projectCols.forEach(pc => {
+                        const hours = parseFloat(row[pc.index]) || 0;
+                        if (hours > 0) {
+                            entries[dateStr][pc.name] = hours;
+                        }
+                    });
+
+                    if (locationColIndex >= 0 && row[locationColIndex]) {
+                        entries[dateStr].location = row[locationColIndex];
+                    }
+
+                    if (notesColIndex >= 0 && row[notesColIndex]) {
+                        entries[dateStr].notes = row[notesColIndex];
+                    }
+                }
+
+                // Save URL if requested
+                if (saveUrl) {
+                    localStorage.setItem('tom_github_url', url);
+                }
+
+                saveData();
+                render();
+                closeGitHubModal();
+                showStatus(t('githubLoaded'));
+
+            } catch (err) {
+                console.error('GitHub load error:', err);
+                showStatus(t('githubError') + ': ' + err.message);
+            }
+        }
+
+        function printOverview() {
+            const modal = document.getElementById('overviewModal');
+            modal.classList.add('print-mode');
+            window.print();
+            setTimeout(() => modal.classList.remove('print-mode'), 500);
+        }
+
+        function exportOverviewCSV() {
+            const dates = getViewDates();
+            const periodLabel = getPeriodLabel();
+
+            const projectTotals = {};
+            projects.forEach(p => projectTotals[p] = 0);
+            let totalHours = 0;
+            let workDays = 0;
+
+            dates.forEach(date => {
+                const entry = entries[formatDate(date)] || {};
+                let dayHours = 0;
+                projects.forEach(p => {
+                    const h = entry[p] || 0;
+                    projectTotals[p] += h;
+                    dayHours += h;
+                });
+                if (dayHours > 0) workDays++;
+                totalHours += dayHours;
+            });
+
+            let csv = `${t('projectOverview')}: ${periodLabel}\n`;
+            csv += `${t('byLabel')}: ${settings.userName || 'User'}\n\n`;
+            csv += `${t('projectName')},${t('hours')},${t('percentage')},${t('averagePerDay')}\n`;
+
+            Object.entries(projectTotals)
+                .filter(([_, h]) => h > 0)
+                .sort((a, b) => b[1] - a[1])
+                .forEach(([project, hours]) => {
+                    const pct = totalHours > 0 ? (hours / totalHours * 100).toFixed(1) : '0.0';
+                    const avg = workDays > 0 ? (hours / workDays).toFixed(2) : '0.00';
+                    csv += `"${project}",${hours.toFixed(2)},${pct}%,${avg}\n`;
+                });
+
+            csv += `${t('total')},${totalHours.toFixed(2)},100%,${workDays > 0 ? (totalHours / workDays).toFixed(2) : '0.00'}\n`;
+
+            downloadFile(csv, `${t('projectOverview')}_${periodLabel.replace(/\s+/g, '_')}.csv`, 'text/csv');
+            showStatus(t('csvExported'));
+        }
+
+        function exportOverviewExcel() {
+            const dates = getViewDates();
+            const periodLabel = getPeriodLabel();
+
+            const projectTotals = {};
+            projects.forEach(p => projectTotals[p] = 0);
+            let totalHours = 0;
+            let workDays = 0;
+
+            dates.forEach(date => {
+                const entry = entries[formatDate(date)] || {};
+                let dayHours = 0;
+                projects.forEach(p => {
+                    const h = entry[p] || 0;
+                    projectTotals[p] += h;
+                    dayHours += h;
+                });
+                if (dayHours > 0) workDays++;
+                totalHours += dayHours;
+            });
+
+            const wb = XLSX.utils.book_new();
+            const wsData = [];
+
+            // Title
+            wsData.push([`${t('projectOverview')}: ${periodLabel}`]);
+            wsData.push([`${t('byLabel')}: ${settings.userName || 'User'}`]);
+            wsData.push([]);
+
+            // Summary
+            wsData.push([t('totalHours'), totalHours.toFixed(2)]);
+            wsData.push([t('workDays'), workDays]);
+            wsData.push([t('averagePerDay'), workDays > 0 ? (totalHours / workDays).toFixed(2) : '0.00']);
+            wsData.push([]);
+
+            // Header
+            wsData.push([t('projectName'), t('hours'), t('percentage'), t('averagePerDay')]);
+
+            // Data
+            Object.entries(projectTotals)
+                .filter(([_, h]) => h > 0)
+                .sort((a, b) => b[1] - a[1])
+                .forEach(([project, hours]) => {
+                    const pct = totalHours > 0 ? (hours / totalHours * 100).toFixed(1) + '%' : '0.0%';
+                    const avg = workDays > 0 ? (hours / workDays).toFixed(2) : '0.00';
+                    wsData.push([project, hours, pct, avg]);
+                });
+
+            // Total row
+            wsData.push([t('total'), totalHours, '100%', workDays > 0 ? (totalHours / workDays).toFixed(2) : '0.00']);
+
+            const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+            // Column widths
+            ws['!cols'] = [{ wch: 30 }, { wch: 12 }, { wch: 12 }, { wch: 15 }];
+
+            // Add borders and styling
+            const range = XLSX.utils.decode_range(ws['!ref']);
+            for (let R = range.s.r; R <= range.e.r; ++R) {
+                for (let C = range.s.c; C <= range.e.c; ++C) {
+                    const cell_ref = XLSX.utils.encode_cell({ r: R, c: C });
+                    if (!ws[cell_ref]) continue;
+                    if (!ws[cell_ref].s) ws[cell_ref].s = {};
+                    ws[cell_ref].s.border = {
+                        top: { style: 'thin', color: { rgb: '000000' } },
+                        bottom: { style: 'thin', color: { rgb: '000000' } },
+                        left: { style: 'thin', color: { rgb: '000000' } },
+                        right: { style: 'thin', color: { rgb: '000000' } }
+                    };
+                }
+            }
+
+            XLSX.utils.book_append_sheet(wb, ws, t('projectOverview').substring(0, 31));
+
+            const filename = `${t('projectOverview')}_${periodLabel.replace(/\s+/g, '_')}.xlsx`;
+            XLSX.writeFile(wb, filename);
+            showStatus(t('excelExported'));
         }
 
         // Language buttons
@@ -1201,6 +1953,7 @@
         function loadData() {
             entries = JSON.parse(localStorage.getItem('tom_entries') || '{}');
             projects = JSON.parse(localStorage.getItem('tom_projects') || '["Project A", "Project B", "Meeting", "Training"]');
+            customLocations = JSON.parse(localStorage.getItem('tom_locations') || '[]');
             const savedSettings = JSON.parse(localStorage.getItem('tom_settings') || '{}');
             settings = { ...settings, ...savedSettings };
             document.getElementById('userName').value = settings.userName || '';
@@ -1214,6 +1967,7 @@
         function saveData() {
             localStorage.setItem('tom_entries', JSON.stringify(entries));
             localStorage.setItem('tom_projects', JSON.stringify(projects));
+            localStorage.setItem('tom_locations', JSON.stringify(customLocations));
             localStorage.setItem('tom_settings', JSON.stringify(settings));
         }
 
@@ -1338,7 +2092,8 @@
                 const dateStr = formatDate(date);
                 const dayOfWeek = date.getDay();
                 const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-                const isHoliday = holidayMap[dateStr];
+                const holiday = holidayMap[dateStr];
+                const isHoliday = !!holiday;
                 const isToday = dateStr === today;
                 const entry = entries[dateStr] || {};
 
@@ -1350,7 +2105,7 @@
                 const rowClass = rowClasses.join(' ');
 
                 bodyHtml += `<tr>`;
-                bodyHtml += `<td class="date-cell ${rowClass}" title="${isHoliday ? getHolidayName(isHoliday) : ''}">${formatDateDisplay(date)}${isHoliday ? ' *' : ''}</td>`;
+                bodyHtml += `<td class="date-cell ${rowClass}" title="${isHoliday ? getHolidayName(holiday) : ''}">${formatDateDisplay(date)}${isHoliday ? ' *' : ''}</td>`;
 
                 projects.forEach(p => {
                     const hours = entry[p] || 0;
@@ -1367,12 +2122,13 @@
                     workDays++;
                 }
 
-                const location = entry.location || '-';
+                // For holidays, default location is "Feiertag"
+                let location = entry.location || (isHoliday ? t('holiday') : '-');
                 const notes = entry.notes || '';
 
                 bodyHtml += `<td class="duration-cell ${rowClass}">${duration > 0 ? duration.toFixed(2) : '-'}</td>`;
                 bodyHtml += `<td class="overtime-cell ${overtime >= 0 ? 'positive' : ''} ${rowClass}">${duration > 0 ? (overtime >= 0 ? '+' : '') + overtime.toFixed(2) : '-'}</td>`;
-                bodyHtml += `<td class="${rowClass}"><select onchange="updateLocation('${dateStr}', this.value)">`;
+                bodyHtml += `<td class="${rowClass}"><select onchange="updateLocation('${dateStr}', this.value)" ${isHoliday ? 'data-holiday="true"' : ''}>`;
                 locations.forEach(loc => {
                     bodyHtml += `<option value="${loc}" ${location === loc ? 'selected' : ''}>${loc}</option>`;
                 });
@@ -1408,14 +2164,12 @@
             const today = new Date();
             today.setHours(0, 0, 0, 0);
 
-            // Get all holidays in view period
             const years = [...new Set(dates.map(d => d.getFullYear()))];
             let allHolidays = [];
             years.forEach(year => {
                 allHolidays = allHolidays.concat(getHolidaysForYear(year));
             });
 
-            // Filter to current period
             const startDate = dates[0];
             const endDate = dates[dates.length - 1];
             const periodHolidays = allHolidays.filter(h =>
@@ -1472,7 +2226,37 @@
             saveData();
         }
 
-        // Projects
+        // Add entry (project or location)
+        function addEntry() {
+            const typeSelect = document.getElementById('addType');
+            const input = document.getElementById('newProject');
+            const name = input.value.trim();
+            const type = typeSelect.value;
+
+            if (!name) return;
+
+            if (type === 'project') {
+                if (projects.includes(name)) {
+                    showStatus(t('projectExists'));
+                    return;
+                }
+                projects.push(name);
+                showStatus(t('projectAdded'));
+            } else {
+                if (customLocations.includes(name)) {
+                    showStatus(t('locationExists'));
+                    return;
+                }
+                customLocations.push(name);
+                showStatus(t('locationAdded'));
+            }
+
+            saveData();
+            input.value = '';
+            render();
+        }
+
+        // Legacy function for backward compatibility
         function addProject() {
             const input = document.getElementById('newProject');
             const name = input.value.trim();
@@ -1530,7 +2314,220 @@
             setTimeout(() => el.style.display = 'none', 2000);
         }
 
-        // Export Excel
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type: type + ';charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+
+        // CSV Export
+        function exportCSV() {
+            const dates = getViewDates();
+            const periodLabel = getPeriodLabel();
+
+            const years = [...new Set(dates.map(d => d.getFullYear()))];
+            const holidayMap = {};
+            years.forEach(year => {
+                Object.assign(holidayMap, getHolidayMap(year));
+            });
+
+            let csv = '';
+
+            // Header
+            const header = [t('date'), ...projects, t('duration'), t('overtime'), t('location'), t('notes')];
+            csv += header.map(h => `"${h}"`).join(',') + '\n';
+
+            // Data rows
+            dates.forEach(date => {
+                const dateStr = formatDate(date);
+                const entry = entries[dateStr] || {};
+                const holiday = holidayMap[dateStr];
+
+                let dayHours = 0;
+                let dateLabel = formatDateDisplay(date);
+                if (holiday) dateLabel += ` (${getHolidayName(holiday)})`;
+
+                const row = [`"${dateLabel}"`];
+
+                projects.forEach(p => {
+                    const h = entry[p] || 0;
+                    dayHours += h;
+                    row.push(h || '');
+                });
+
+                const overtime = dayHours > 0 ? dayHours - settings.targetHoursPerDay : 0;
+
+                row.push(dayHours || '');
+                row.push(dayHours > 0 ? overtime : '');
+                row.push(`"${entry.location || ''}"`);
+                row.push(`"${(entry.notes || '').replace(/"/g, '""')}"`);
+
+                csv += row.join(',') + '\n';
+            });
+
+            // Total row
+            const projectTotals = {};
+            let totalHours = 0;
+            let totalOvertime = 0;
+
+            projects.forEach(p => projectTotals[p] = 0);
+
+            dates.forEach(date => {
+                const entry = entries[formatDate(date)] || {};
+                let dayHours = 0;
+                projects.forEach(p => {
+                    const h = entry[p] || 0;
+                    projectTotals[p] += h;
+                    dayHours += h;
+                });
+                if (dayHours > 0) {
+                    totalHours += dayHours;
+                    totalOvertime += dayHours - settings.targetHoursPerDay;
+                }
+            });
+
+            const totalRow = [`"${t('total')}"`];
+            projects.forEach(p => totalRow.push(projectTotals[p]));
+            totalRow.push(totalHours);
+            totalRow.push(totalOvertime);
+            totalRow.push('');
+            totalRow.push('');
+            csv += totalRow.join(',') + '\n';
+
+            const filename = `${t('timesheet')}_${periodLabel.replace(/\s+/g, '_')}.csv`;
+            downloadFile(csv, filename, 'text/csv');
+            showStatus(t('csvExported'));
+        }
+
+        // CSV Import
+        function importCSV(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const content = e.target.result;
+                    const lines = content.split('\n').filter(l => l.trim());
+
+                    if (lines.length < 2) {
+                        showStatus(t('csvImportError'));
+                        return;
+                    }
+
+                    // Parse header
+                    const header = parseCSVLine(lines[0]);
+                    const dateColIndex = 0;
+                    const projectCols = [];
+                    const locationColIndex = header.findIndex(h =>
+                        h.toLowerCase() === 'location' ||
+                        h.toLowerCase() === 'arbeitsort' ||
+                        h === t('location')
+                    );
+                    const notesColIndex = header.findIndex(h =>
+                        h.toLowerCase() === 'notes' ||
+                        h.toLowerCase() === 'bemerkung' ||
+                        h === t('notes')
+                    );
+
+                    // Find project columns (skip date, duration, overtime, location, notes)
+                    const skipCols = [t('date'), t('duration'), t('overtime'), t('location'), t('notes'),
+                                     'date', 'duration', 'overtime', 'location', 'notes',
+                                     'datum', 'dauer', 'überstunden', 'arbeitsort', 'bemerkung'];
+
+                    header.forEach((h, i) => {
+                        if (i === 0) return; // Skip date column
+                        if (!skipCols.some(s => h.toLowerCase() === s.toLowerCase())) {
+                            projectCols.push({ index: i, name: h });
+                        }
+                    });
+
+                    // Add new projects if not exist
+                    projectCols.forEach(pc => {
+                        if (!projects.includes(pc.name)) {
+                            projects.push(pc.name);
+                        }
+                    });
+
+                    // Parse data rows (skip header and total row)
+                    for (let i = 1; i < lines.length; i++) {
+                        const row = parseCSVLine(lines[i]);
+                        if (!row[0] || row[0].toLowerCase().includes('total') || row[0].toLowerCase().includes('summe')) {
+                            continue;
+                        }
+
+                        // Try to extract date from the first column
+                        const dateMatch = row[0].match(/(\d{1,2})\.(\d{1,2})(?:\.(\d{4}))?/);
+                        if (!dateMatch) continue;
+
+                        const day = parseInt(dateMatch[1]);
+                        const month = parseInt(dateMatch[2]) - 1;
+                        const year = dateMatch[3] ? parseInt(dateMatch[3]) : currentDate.getFullYear();
+                        const date = new Date(year, month, day);
+                        const dateStr = formatDate(date);
+
+                        if (!entries[dateStr]) entries[dateStr] = {};
+
+                        // Import project hours
+                        projectCols.forEach(pc => {
+                            const hours = parseFloat(row[pc.index]) || 0;
+                            if (hours > 0) {
+                                entries[dateStr][pc.name] = hours;
+                            }
+                        });
+
+                        // Import location
+                        if (locationColIndex >= 0 && row[locationColIndex]) {
+                            entries[dateStr].location = row[locationColIndex];
+                        }
+
+                        // Import notes
+                        if (notesColIndex >= 0 && row[notesColIndex]) {
+                            entries[dateStr].notes = row[notesColIndex];
+                        }
+                    }
+
+                    saveData();
+                    render();
+                    showStatus(t('csvImported'));
+                } catch (err) {
+                    console.error(err);
+                    showStatus(t('csvImportError'));
+                }
+            };
+            reader.readAsText(file);
+            input.value = '';
+        }
+
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') {
+                    if (inQuotes && line[i + 1] === '"') {
+                        current += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim());
+            return result;
+        }
+
+        // Export Excel with nice formatting
         function exportExcel() {
             const dates = getViewDates();
             const userName = settings.userName || t('timesheet');
@@ -1545,16 +2542,24 @@
             const wb = XLSX.utils.book_new();
             const wsData = [];
 
-            wsData.push([`${userName} - ${periodLabel}`]);
+            // Title section
+            wsData.push([]);
+            wsData.push([`  ${t('timesheet').toUpperCase()}`]);
+            wsData.push([]);
+            wsData.push([`  ${t('name').replace(':', '')}:`, userName]);
+            wsData.push([`  ${currentLang === 'de' ? 'Zeitraum' : 'Period'}:`, periodLabel]);
+            wsData.push([]);
             wsData.push([]);
 
-            const header = [t('date'), ...projects, t('duration'), t('overtime'), t('location'), t('notes')];
+            // Header row
+            const header = ['', t('date'), ...projects, t('duration'), t('overtime'), t('location'), t('notes')];
             wsData.push(header);
 
             const projectTotals = {};
             projects.forEach(p => projectTotals[p] = 0);
             let totalHours = 0;
             let totalOvertime = 0;
+            let rowNum = 9; // Starting data row
 
             dates.forEach(date => {
                 const dateStr = formatDate(date);
@@ -1565,7 +2570,7 @@
                 let dateLabel = formatDateDisplay(date);
                 if (holiday) dateLabel += ` (${getHolidayName(holiday)})`;
 
-                const row = [dateLabel];
+                const row = ['', dateLabel];
 
                 projects.forEach(p => {
                     const h = entry[p] || 0;
@@ -1575,8 +2580,10 @@
                 });
 
                 const overtime = dayHours > 0 ? dayHours - settings.targetHoursPerDay : 0;
-                totalHours += dayHours;
-                if (dayHours > 0) totalOvertime += overtime;
+                if (dayHours > 0) {
+                    totalHours += dayHours;
+                    totalOvertime += overtime;
+                }
 
                 row.push(dayHours || '');
                 row.push(dayHours > 0 ? overtime : '');
@@ -1584,9 +2591,12 @@
                 row.push(entry.notes || '');
 
                 wsData.push(row);
+                rowNum++;
             });
 
-            const totalRow = [t('total')];
+            // Total row
+            wsData.push([]);
+            const totalRow = ['', t('total')];
             projects.forEach(p => totalRow.push(projectTotals[p]));
             totalRow.push(totalHours);
             totalRow.push(totalOvertime);
@@ -1594,12 +2604,106 @@
             totalRow.push('');
             wsData.push(totalRow);
 
+            // Footer
+            wsData.push([]);
+            wsData.push([]);
+            wsData.push([`  ${currentLang === 'de' ? 'Erstellt am' : 'Generated on'}: ${new Date().toLocaleDateString()}`]);
+
             const ws = XLSX.utils.aoa_to_sheet(wsData);
 
-            const colWidths = [{ wch: 25 }];
+            // Column widths
+            const colWidths = [{ wch: 3 }, { wch: 22 }];
             projects.forEach(() => colWidths.push({ wch: 10 }));
-            colWidths.push({ wch: 10 }, { wch: 10 }, { wch: 12 }, { wch: 20 });
+            colWidths.push({ wch: 10 }, { wch: 10 }, { wch: 14 }, { wch: 25 });
             ws['!cols'] = colWidths;
+
+            // Set row heights
+            ws['!rows'] = [];
+            for (let i = 0; i < wsData.length; i++) {
+                ws['!rows'][i] = { hpt: 18 };
+            }
+            ws['!rows'][1] = { hpt: 28 }; // Title row
+
+            // Apply styling using cell references
+            const range = XLSX.utils.decode_range(ws['!ref']);
+
+            for (let R = range.s.r; R <= range.e.r; ++R) {
+                for (let C = range.s.c; C <= range.e.c; ++C) {
+                    const cell_ref = XLSX.utils.encode_cell({ r: R, c: C });
+                    if (!ws[cell_ref]) {
+                        ws[cell_ref] = { v: '', t: 's' };
+                    }
+                    if (!ws[cell_ref].s) ws[cell_ref].s = {};
+
+                    // Header row (row 7, 0-indexed)
+                    if (R === 7) {
+                        ws[cell_ref].s = {
+                            font: { bold: true, color: { rgb: 'FFFFFF' } },
+                            fill: { fgColor: { rgb: '4472C4' } },
+                            alignment: { horizontal: 'center', vertical: 'center' },
+                            border: {
+                                top: { style: 'medium', color: { rgb: '000000' } },
+                                bottom: { style: 'medium', color: { rgb: '000000' } },
+                                left: { style: 'thin', color: { rgb: '000000' } },
+                                right: { style: 'thin', color: { rgb: '000000' } }
+                            }
+                        };
+                    }
+                    // Data rows
+                    else if (R >= 8 && R < rowNum) {
+                        const isAlternate = (R - 8) % 2 === 1;
+                        ws[cell_ref].s = {
+                            fill: { fgColor: { rgb: isAlternate ? 'D9E1F2' : 'FFFFFF' } },
+                            alignment: { horizontal: C >= 2 ? 'center' : 'left', vertical: 'center' },
+                            border: {
+                                top: { style: 'thin', color: { rgb: 'CCCCCC' } },
+                                bottom: { style: 'thin', color: { rgb: 'CCCCCC' } },
+                                left: { style: 'thin', color: { rgb: 'CCCCCC' } },
+                                right: { style: 'thin', color: { rgb: 'CCCCCC' } }
+                            }
+                        };
+                    }
+                    // Total row
+                    else if (R === rowNum + 1) {
+                        ws[cell_ref].s = {
+                            font: { bold: true },
+                            fill: { fgColor: { rgb: 'E2EFDA' } },
+                            alignment: { horizontal: C >= 2 ? 'center' : 'left', vertical: 'center' },
+                            border: {
+                                top: { style: 'medium', color: { rgb: '000000' } },
+                                bottom: { style: 'medium', color: { rgb: '000000' } },
+                                left: { style: 'thin', color: { rgb: '000000' } },
+                                right: { style: 'thin', color: { rgb: '000000' } }
+                            }
+                        };
+                    }
+                    // Title
+                    else if (R === 1) {
+                        ws[cell_ref].s = {
+                            font: { bold: true, sz: 16 },
+                            alignment: { horizontal: 'left', vertical: 'center' }
+                        };
+                    }
+                }
+            }
+
+            // Add outer border for the data section
+            const dataStartRow = 7;
+            const dataEndRow = rowNum + 1;
+            const dataEndCol = header.length - 1;
+
+            for (let R = dataStartRow; R <= dataEndRow; ++R) {
+                // Left border
+                const leftCell = XLSX.utils.encode_cell({ r: R, c: 1 });
+                if (ws[leftCell] && ws[leftCell].s && ws[leftCell].s.border) {
+                    ws[leftCell].s.border.left = { style: 'medium', color: { rgb: '000000' } };
+                }
+                // Right border
+                const rightCell = XLSX.utils.encode_cell({ r: R, c: dataEndCol });
+                if (ws[rightCell] && ws[rightCell].s && ws[rightCell].s.border) {
+                    ws[rightCell].s.border.right = { style: 'medium', color: { rgb: '000000' } };
+                }
+            }
 
             XLSX.utils.book_append_sheet(wb, ws, periodLabel.substring(0, 31));
 
